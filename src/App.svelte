@@ -1,28 +1,28 @@
 <script>
 	import { getContext, setContext } from "svelte";
-	import { Col, Container, Row } from "sveltestrap";
+	import { Col, Container, Row, Badge, Icon, Card, CardBody, ListGroup, ListGroupItem } from "sveltestrap";
 	import { writable } from "svelte/store";
 	import { Draw } from "./canvas/draw";
-	import { Icon } from "sveltestrap";
-	import { Card, CardBody } from "sveltestrap";
-	import { ListGroup, ListGroupItem } from "sveltestrap";
+	
 
 	// let isOpen = false;
 	// const toggle = () => (isOpen = !isOpen);
 	export let items;
-	export let elemenType = { type: "", color: "jj" };
+	export let elemenType = { type: "", color: "", counterType: "" };
 	export let data;
+	export let counter;
 	const store = writable(elemenType);
-	// 	setContext("key", elemenType);
+	// setContext("counter", counter);
 	// let getKey = getContext("key");
 	function elementAdd(elmType) {
-		// elemenType = elmType;
+		elemenType = elmType;
 		store.update((oldValues) => (oldValues = elmType));
-		// console.log(getKey);
+		console.log(counter);
 	}
 	store.subscribe((value) => {
 		data = value;
-		// setContext("key", data);
+		// console.log(value);
+		// // setContext("key", data);
 	});
 </script>
 
@@ -30,7 +30,7 @@
 	<header class="mb-3">
 		<ul class="list-group">
 			<li class="list-group-item d-flex justify-content-center">
-				<Icon name="palette-fill" /> Draw Your Own
+				<Icon name="palette-fill" style="margin-right:3px" /> Draw Your Own
 			</li>
 		</ul>
 	</header>
@@ -66,7 +66,17 @@
 			<li
 				class="list-group-item d-flex justify-content-around bd-highlight"
 			>
-				<div class="p-2 bd-highlight">Flex item</div>
+				<div class="p-2 bd-highlight d-flex">
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<h4  on:click={()=> (store.update((oldValues) => (oldValues = {counterType: 'undo'})))}>
+						<Badge pill secondary style="cursor:pointer"><Icon name="arrow-counterclockwise" /></Badge>
+					</h4>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<h4  on:click={()=> (store.update((oldValues) => (oldValues = {counterType: 'redo'})))}>
+					<Badge pill secondary style="cursor:pointer"><Icon name="arrow-clockwise" /></Badge>
+
+					</h4>
+				</div>
 				<div class="p-2 bd-highlight" />
 				<div class="p-2 bd-highlight">Flex item</div>
 			</li>
@@ -76,8 +86,8 @@
 
 <style>
 	:root {
-		--node-size-width: 50px;
-		--node-size-height: 50px;
+		--node-size-width: 60px;
+		--node-size-height: 60px;
 	}
 	main {
 		text-align: center;

@@ -4,7 +4,10 @@
     import { writable } from "svelte/store";
 
     export let propValue;
-    let setData;
+    let counter = -1;
+    let max = 0;
+    // let setData;
+    // let getCounter = getContext('counter');
 
     onMount(() => {
         setTimeout(() => {
@@ -17,8 +20,30 @@
         const capitalized = word.charAt(0).toUpperCase() + word.slice(1);
         return capitalized;
     }
+    function undo(params, canvas) {
+        // console.log(params);
+        let min = 0;        
+        max--
+        max >= min ? (canvas.item(max).visible = false) : (max = 0);
+        canvas.renderAll();
+    }
+    function redo(params, canvas) {
+        // console.log(params);
+        let min = 0;
+        max++;
+        (max <= counter) ? (canvas.item(max-1).visible = true) : (max = counter);
+        canvas.renderAll();
+    }
     function drawMD(canvas) {
         propValue.subscribe((value) => {
+            console.log(value);
+            if(!value.counterType || value.counterType === '')  {
+                counter++
+                max = counter;
+            } else {
+                value.counterType === 'redo' ? redo(value, canvas) : undo(value, canvas);
+            }
+
             let obj = {
                 left: 120,
                 top: 10,
@@ -30,6 +55,8 @@
             if (value.type) {
                 let rect = new fabric[capitalized(value.type)](obj);
                 canvas.add(rect);
+                
+                console.log(counter);
             }
         });
     }
