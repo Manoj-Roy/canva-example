@@ -1,9 +1,19 @@
 <script>
 	import { getContext, setContext } from "svelte";
-	import { Col, Container, Row, Badge, Icon, Card, CardBody, ListGroup, ListGroupItem } from "sveltestrap";
+	import {
+		Col,
+		Container,
+		Row,
+		Badge,
+		Icon,
+		Card,
+		CardBody,
+		ListGroup,
+		ListGroupItem,
+		Tooltip
+	} from "sveltestrap";
 	import { writable } from "svelte/store";
 	import { Draw } from "./canvas/draw";
-	
 
 	// let isOpen = false;
 	// const toggle = () => (isOpen = !isOpen);
@@ -68,17 +78,48 @@
 			>
 				<div class="p-2 bd-highlight d-flex">
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<h4  on:click={()=> (store.update((oldValues) => (oldValues = {counterType: 'undo'})))}>
-						<Badge pill secondary style="cursor:pointer"><Icon name="arrow-counterclockwise" /></Badge>
+					<h4 id="undo"
+						on:click={() =>
+							store.update(
+								(oldValues) =>
+									(oldValues = { counterType: "undo" })
+							)}
+					>
+						<Badge pill secondary style="cursor:pointer"
+							><Icon name="arrow-counterclockwise" /></Badge
+						>
 					</h4>
+					<Tooltip target="undo" top>Undo</Tooltip>
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<h4  on:click={()=> (store.update((oldValues) => (oldValues = {counterType: 'redo'})))}>
-					<Badge pill secondary style="cursor:pointer"><Icon name="arrow-clockwise" /></Badge>
-
+					<h4 id="redo"
+						on:click={() =>
+							store.update(
+								(oldValues) =>
+									(oldValues = { counterType: "redo" })
+							)}
+					>
+						<Badge pill secondary style="cursor:pointer"
+							><Icon name="arrow-clockwise" /></Badge
+						>
 					</h4>
+					<Tooltip target="redo" top>Redo</Tooltip>
+
 				</div>
 				<div class="p-2 bd-highlight" />
-				<div class="p-2 bd-highlight">Flex item</div>
+				<div class="p-2 bd-highlight">
+					<label for="customRange3" class="form-label"
+						>Page Size</label
+					>
+					<input
+						type="range"
+						class="form-range"
+						min="0"
+						max="5"
+						step="0.5"
+						style="border: none;"
+						id="customRange3"
+					/>
+				</div>
 			</li>
 		</ul>
 	</footer>
