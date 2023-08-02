@@ -1,5 +1,5 @@
 {
-  "name": "svelte-app",
+  "name": "canva-example",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -24,5 +24,17 @@
     "bootstrap-icons": "^1.10.5",
     "sirv-cli": "^2.0.0",
     "sveltestrap": "^5.10.0"
-  }
+  },
+  "description": "---",
+  "main": "rollup.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/mnjroy/sample-canva.git"
+  },
+  "author": "Manoj roy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://bitbucket.org/mnjroy/sample-canva/issues"
+  },
+  "homepage": "https://bitbucket.org/mnjroy/sample-canva#readme"
 }
